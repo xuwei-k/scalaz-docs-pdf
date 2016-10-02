@@ -2,12 +2,12 @@
 
 set -e
 
-cd ./scala_text
-sbt tut
+cd ./scalaz-docs
+wget https://raw.githubusercontent.com/paulp/sbt-extras/964ee32c43/sbt
+chmod +x sbt
+./sbt -J-Xmx2560m scalazDiagram tut
 cd -
-cp ./scala_text/book.json ./
-cp -r ./scala_text/src/img ./
-cp -r ./scala_text/src/example_projects ./
+cp ./scalaz-docs/gitbook/book.json ./
 for f in ./img/*.svg
 do
   if [[ $f =~ \./img/(.*)\.svg ]]; then
@@ -15,9 +15,9 @@ do
   fi
 done
 mkdir target
-for f in ./scala_text/gitbook/*.md
+for f in ./scalaz-docs/gitbook/*.md
 do
-  if [[ $f =~ \./scala_text/gitbook/(.*)\.md ]]; then
+  if [[ $f =~ \./scalaz-docs/gitbook/(.*)\.md ]]; then
     cp $f ./target/
     pandoc -o "./target/${BASH_REMATCH[1]}.tex" -f markdown_github+footnotes+header_attributes-hard_line_breaks-intraword_underscores --latex-engine=lualatex --chapters --listings --filter=filter.py $f
   fi

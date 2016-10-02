@@ -1,66 +1,69 @@
 language: java
 os:
-  - osx
+- osx
 cache:
   directories:
-    - "$HOME/.ivy2/cache"
-    - "$HOME/.sbt/boot"
-    - "$HOME/.sbt/launchers"
-    - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot"
+  - "$HOME/.sbt/launchers"
+  - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
 before_install:
-  - brew update
-  - sudo pip install --upgrade pip
+- brew update
+- sudo pip install --upgrade pip
 install:
-  - curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
-  - sudo installer -pkg BasicTeX.pkg -target /
-  - rm BasicTeX.pkg
-  - export PATH=$PATH:/usr/texbin
-  - sudo tlmgr update --self --all
-  - sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace fncychap
-  - brew install pandoc sbt
-  - brew cask install inkscape
-  - sudo pip install pandocfilters
+- curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
+- sudo installer -pkg BasicTeX.pkg -target /
+- rm BasicTeX.pkg
+- export PATH=$PATH:/usr/texbin
+- sudo tlmgr update --self --all
+- sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended
+  filehook type1cm mdframed needspace fncychap
+- brew install pandoc
+- brew cask install inkscape
+- brew install graphviz
+- sudo pip install pandocfilters
 before_script:
-  - sudo mkdir -p /usr/local/texlive/2016basic/texmf-local/fonts/opentype/public/hiragino/
-  - cd /usr/local/texlive/2016basic/texmf-local/fonts/opentype/public/hiragino/
-  - sudo ln -s "/Library/Fonts/ヒラギノ明朝 Pro W3.otf" HiraMinPro-W3.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ明朝 Pro W6.otf" HiraMinPro-W6.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Pro W3.otf" HiraKakuPro-W3.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Pro W6.otf" HiraKakuPro-W6.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Std W8.otf" HiraKakuStd-W8.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ丸ゴ Pro W4.otf" HiraMaruPro-W4.otf
-  - sudo ln -s "/System/Library/Fonts/ヒラギノ明朝 ProN W3.otf" HiraMinProN-W3.otf
-  - sudo ln -s "/System/Library/Fonts/ヒラギノ明朝 ProN W6.otf" HiraMinProN-W6.otf
-  - sudo ln -s "/System/Library/Fonts/ヒラギノ角ゴ ProN W3.otf" HiraKakuProN-W3.otf
-  - sudo ln -s "/System/Library/Fonts/ヒラギノ角ゴ ProN W6.otf" HiraKakuProN-W6.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ角ゴ StdN W8.otf" HiraKakuStdN-W8.otf
-  - sudo ln -s "/Library/Fonts/ヒラギノ丸ゴ ProN W4.otf" HiraMaruProN-W4.otf
-  - sudo mktexlsr
-  - cd -
-  - sudo fmtutil-sys --byfmt lualatex
-  - export USE_IPAFONT=true
+- sudo mkdir -p /usr/local/texlive/2016basic/texmf-local/fonts/opentype/public/hiragino/
+- cd /usr/local/texlive/2016basic/texmf-local/fonts/opentype/public/hiragino/
+- sudo ln -s "/Library/Fonts/ヒラギノ明朝 Pro W3.otf" HiraMinPro-W3.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ明朝 Pro W6.otf" HiraMinPro-W6.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Pro W3.otf" HiraKakuPro-W3.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Pro W6.otf" HiraKakuPro-W6.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ角ゴ Std W8.otf" HiraKakuStd-W8.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ丸ゴ Pro W4.otf" HiraMaruPro-W4.otf
+- sudo ln -s "/System/Library/Fonts/ヒラギノ明朝 ProN W3.otf" HiraMinProN-W3.otf
+- sudo ln -s "/System/Library/Fonts/ヒラギノ明朝 ProN W6.otf" HiraMinProN-W6.otf
+- sudo ln -s "/System/Library/Fonts/ヒラギノ角ゴ ProN W3.otf" HiraKakuProN-W3.otf
+- sudo ln -s "/System/Library/Fonts/ヒラギノ角ゴ ProN W6.otf" HiraKakuProN-W6.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ角ゴ StdN W8.otf" HiraKakuStdN-W8.otf
+- sudo ln -s "/Library/Fonts/ヒラギノ丸ゴ ProN W4.otf" HiraMaruProN-W4.otf
+- sudo mktexlsr
+- cd -
+- sudo fmtutil-sys --byfmt lualatex
+- export USE_IPAFONT=true
 script:
-  - ./setup.sh
-  - make all
+- "./setup.sh"
+- make all
 after_script:
-  - find $HOME/.sbt -name "*.lock" | xargs rm
-  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
-  - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
+- find $HOME/.sbt -name "*.lock" | xargs rm
+- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+- find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
 after_success:
-  - echo -e "Host github.com\n\tStrictHostKeyChecking no\nIdentityFile ~/.ssh/deploy.key\n" >> ~/.ssh/config
-  - openssl aes-256-cbc -k "$SERVER_KEY" -in deploy_key.enc -d -a -out deploy.key
-  - cp deploy.key ~/.ssh/
-  - chmod 600 ~/.ssh/deploy.key
-  - git config --global user.email "m@yyu.pw"
-  - git config --global user.name "Yoshimura Yuu"
-  - git fetch origin gh-pages:gh-pages
-  - git stash -u
-  - git checkout gh-pages
-  - rm scala_text.pdf
-  - git stash pop
-  - git add scala_text.pdf
-  - git commit -a -m "auto commit on travis $TRAVIS_JOB_NUMBER $TRAVIS_COMMIT"
-  - git push git@github.com:dwango/scala_text_pdf.git gh-pages:gh-pages
+- echo -e "Host github.com\n\tStrictHostKeyChecking no\nIdentityFile ~/.ssh/deploy.key\n"
+  >> ~/.ssh/config
+- openssl aes-256-cbc -k "$SERVER_KEY" -in deploy_key.enc -d -a -out deploy.key
+- cp deploy.key ~/.ssh/
+- chmod 600 ~/.ssh/deploy.key
+- git config --global user.email "6b656e6a69@gmail.com"
+- git config --global user.name "xuwei-k"
+- git fetch origin gh-pages:gh-pages
+- git stash -u
+- git checkout gh-pages
+- rm scalaz-docs.pdf
+- git stash pop
+- git add scalaz-docs.pdf
+- git commit -a -m "auto commit on travis $TRAVIS_JOB_NUMBER $TRAVIS_COMMIT"
+- git push git@github.com:xuwei-k/scalaz-docs-pdf.git gh-pages:gh-pages
 env:
   global:
-    secure: XNsC3+N8hInq31CgCB+Ln+XGaTJV4icktH29Mj9/c06niFyx1swZyYGot13z5+gDMyPNazSS7v3Y/D9EcUrZCpfNYKlcciFDo83rhB/GfbIle3sp/WOA2atUgG9vbR5K3d6uJwpd7OfYy1GSH77sGBIpTgOYozO7rFQjSvT7SIkt8rjCgZnQ9+zjAY54ZtnYteKtukEfrDUet4hDjeCDhPr8QOO33juRz1S8w3dzgpsR94jvTRTGK9kSyIXozBBiwFeBTfNFtVIJTqm/HCreiTiOiDbDVP3sJsU139Q3JNJ5lPyZ7asY38VxJgT4xda9ehcCzIsa5NwvysyrdEJ89tu6ZUhKLUieVEW2rXzHnlgxVmWvcmeDtJ9TmjpJJiVZRvDI4ByB2fElLkCHH5/HtdzMmTfslWafBXDkQ2In13jhZsMneD6qR5YGusumka+78y/QBbT+uZDSQCZnytEItqYLnUMao/jUo0BKymu1slesfLQ6omOckEVnFAk4DbECZKlKbxnSyrGsKjhjzRvM3/H0jm7R9deSM1xjlcm5/BYBV3Gh+N6oqE1ssyduyMoHJM/w7a2Gt0ayhkPtETryavBM/5CWqP8lNdboGEZXzj+i4TZbeE1Zzx3YwJkRFELgrN59HS4C4Yiof/6xo2Qe0lBMADIuuN9iJcjiETkHNBg=
+  - secure: NMBKjVgpy4sYi8SAUJrgbqTdeNmxHQWNhH3LAQkBqiX9hSYFGWLeaeda7sDD13PiqdROPY9BgzBZRmu0qEL7QPHY/n4ATGXz5i/7Clw1qfLSrIeTEfSkroWVc+rxHI5fbV66g1BVW4tNllLp7HeKaEVs5TEhCJg9HiHWO3sPFK9tlGO+XEy5thdIu/wjAEyF0Iy3Fx10jGu/TxD6KfrOfADywEL6XWJ6iKGqWztaV0OIRnwyCUDzETbgk9yOMyfsiuvkEglJRJBpBQsexNIE0yJH6J0G7EEwJFkmg+O9DMHKwyQub+43k4hSn6UuG1eZfEpnlQnYvrwOImpHnwocndsEquQciGeiwSxJTOR4sv+/OHixpW/9O3UrO1XPVLtp3bbNFDoxIE/iwhAFD4DdXynLdKwjLI/Bj6avwLlx53jom2+jpC4x/muzRQyItFR/aAqSJTIFgYHjBd+VJlzaSF4MtAcLDwpFiyvzLb16XD1ZVXppjZqpzhxxuQchef+3eU8KBy40rWxItNSQhf0hBIPuXVwTuy9kDrw5FJMRFaaLTRzEAC0JxmfjdbANvlA2ABN1jloWirwQZygoRe0bNdmVtz2JcJhjBbKvryvuTWOkOOiTDKQ0DWzo78ny3GzzcEUqKZ5hgEca9zPelpmzDxqsuoKWk17TcTIfiRKEZKI=

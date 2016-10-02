@@ -1,13 +1,13 @@
-Scala Text PDF
+ScalazDocs PDF
 ========================
 
-[![Build Status](https://travis-ci.org/dwango/scala_text_pdf.svg?branch=master)](https://travis-ci.org/dwango/scala_text_pdf)
+[![Build Status](https://travis-ci.org/xuwei-k/scalaz-docs-pdf.svg?branch=master)](https://travis-ci.org/xuwei-k/scalaz-docs-pdf)
 
-[Scala Text](https://github.com/dwango/scala_text)のPDF版です。
+[Scala Text](https://github.com/xuwei-k/scalaz-docs)のPDF版です。
 
 ## 成果物
 
-- [scala_text.pdf](https://dwango.github.io/scala_text_pdf/scala_text.pdf)
+- [scalaz-docs.pdf](https://xuwei-k.github.io/scalaz-docs-pdf/scalaz-docs.pdf)
 
 ## コンパイル
 
@@ -49,7 +49,7 @@ $ export USE_IPAFONT=true
 
 ## ライセンス
 
-[Scala Text](https://github.com/dwango/scala_text)のライセンスを継承し
+[scalaz docs](https://github.com/xuwei-k/scalaz-docs) (文章の内容)と[scala_text_pdf](https://github.com/dwango/scala_text_pdf) (pdf生成コード部分)のライセンスを継承し
 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.ja)の元で配布されています。
 
 ![CC-BY-NC-SA](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
